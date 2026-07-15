@@ -1,0 +1,15 @@
+[Unit]
+Description=Sea SUP Forecast Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/sea-sup-forecast-bot
+ExecStart=/usr/bin/python3 /opt/sea-sup-forecast-bot/bot.py
+Restart=always
+RestartSec=10
+User=pi
+
+[Install]
+WantedBy=multi-user.target
