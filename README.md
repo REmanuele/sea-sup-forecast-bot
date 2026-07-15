@@ -45,3 +45,11 @@ python3 bot.py
 ## Safety
 
 Never commit tokens, chat IDs or private configuration files.
+
+## Real-world case study
+
+This project was designed as a real Telegram assistant for daily sea-condition evaluation.
+
+The bot combines weather forecast, marine forecast and a custom scoring model to suggest the best time window for SUP activities.
+
+The system was deployed on a Raspberry Pi using systemd and supports both scheduled daily reports and on-demand forecast requests.
