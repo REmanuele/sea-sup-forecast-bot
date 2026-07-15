@@ -9,7 +9,7 @@ The Sea SUP Forecast Bot is designed as a lightweight Telegram assistant deploye
 - Marine forecast data source
 - Custom scoring model
 - Daily scheduled report
-- On-demand `/mare` command
+- On-demand /mare command
 - Optional webcam integration
 - systemd service for automatic startup
 
@@ -21,3 +21,7 @@ The Sea SUP Forecast Bot is designed as a lightweight Telegram assistant deploye
 4. A custom score is calculated for each hour.
 5. The best time window is selected.
 6. A readable Telegram report is generated.
+
+## Real-world context
+
+The project was created to evaluate sea conditions for SUP activities in a specific coastal area. The goal is to combine weather, wind and marine data into a practical decision-support tool.

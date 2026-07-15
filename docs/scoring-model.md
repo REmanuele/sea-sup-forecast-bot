@@ -21,4 +21,6 @@ The score rewards:
 - low rain probability;
 - consistent forecast data.
 
-The goal is not to provide a professional marine forecast, but to support a practical decision for SUP activities.
+## Goal
+
+The goal is not to provide a professional marine forecast, but to support a practical decision for SUP activities by ranking the best available time windows.
