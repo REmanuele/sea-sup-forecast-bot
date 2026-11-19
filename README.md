@@ -1,55 +1,39 @@
 # Sea SUP Forecast Bot
 
-Telegram bot that analyzes weather and marine forecast data to suggest the best time window for SUP activities.
+Telegram bot that combines Open-Meteo weather and marine forecasts into a **simple informational SUP conditions score**. It is an experimental personal project, **not a maritime safety service**.
 
-## Why I built it
+## Current documented behavior
 
-For sea activities such as SUP, the best time depends on multiple conditions: wind, gusts, waves and rain probability. This bot automates the daily forecast and ranks the best hours.
+- Responds to `/mare` messages from a configured Telegram chat.
+- Compares wind, gusts, wave height and precipitation probability over upcoming hours.
+- Excludes an hour if any scoring input is missing or invalid; unknown wave height is never treated as 0 m.
+- Uses **UTC** for both weather and marine forecasts to avoid comparing API-local times to the Raspberry Pi/server's timezone. Displayed times are clearly marked UTC. Convert to your local timezone before planning.
+- Uses Python standard library; deployable as a script with a systemd unit example in the existing repository.
 
-## Features
-
-- Daily or on-demand forecast
-- `/mare` command
-- 24-hour analysis
-- Best-hour ranking
-- Wind, gusts, wave height and rain probability
-- Configurable location
-- Raspberry Pi deployment with systemd
-- No external Python dependencies
-
-## Tech stack
-
-- Python 3
-- Telegram Bot API
-- Open-Meteo Forecast API
-- Open-Meteo Marine API
-- Raspberry Pi
-- systemd
+> The original README mentioned scheduled daily reports. The supplied `bot.py` currently implements a startup notification and on-demand `/mare` handling, but **does not itself implement daily scheduling**. Do not claim daily scheduling until that behavior is implemented and tested.
 
 ## Setup
 
-```bash
-git clone https://github.com/REmanuele/sea-sup-forecast-bot.git
-cd sea-sup-forecast-bot
+```sh
 cp .env.example .env
-nano .env
+# Edit .env: Telegram token, allowed chat ID and coordinates
 python3 bot.py
 ```
 
-## Example command
+Keep real tokens/chat IDs out of Git, logs and shared screenshots.
 
-```text
-/mare
+## Run offline tests
+
+```sh
+python3 -m unittest -v test_forecast.py
 ```
 
-## Safety
+These tests use mock API responses; they verify time alignment, missing input exclusion and warning text. They do not validate forecast accuracy or seaworthiness.
 
-Never commit tokens, chat IDs or private configuration files.
+## Safety and technical limitations
 
-## Real-world case study
-
-This project was designed as a real Telegram assistant for daily sea-condition evaluation.
-
-The bot combines weather forecast, marine forecast and a custom scoring model to suggest the best time window for SUP activities.
-
-The system was deployed on a Raspberry Pi using systemd and supports both scheduled daily reports and on-demand forecast requests.
+- The score is an unvalidated heuristic, not a risk assessment or go/no-go decision.
+- Missing marine coverage means **no rating** for that hour, not safe sea conditions.
+- Forecast errors, rapidly changing conditions, currents, offshore wind, visibility, coastal geography and local warnings are not fully represented.
+- Consult official local weather/marine forecasts, warnings and observed conditions before activities on the water.
+- Python/API calls can fail; the existing bot loop logs exceptions and retries after a delay. Improve API error reporting and backoff before relying on unattended use.
